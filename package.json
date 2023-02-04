@@ -23,7 +23,8 @@
     "mongodb": "^5.0.0",
     "mongoose": "^6.9.0",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^4.6.0"
+    "swagger-ui-express": "^4.6.0",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "dotenv": "^16.0.3",

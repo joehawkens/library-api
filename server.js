@@ -40,11 +40,11 @@ db.connectDB(() => {
 const swaggerOptions = {
     swaggerDefinition: {
         info: {
-            title: 'Contacts API',
+            title: 'Library API',
             version: '1.0.0'
         },
     },
-    apis: ['./routes/contacts.js'],
+    apis: ['./routes/books.js', './routes/authors.js'],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);

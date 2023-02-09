@@ -30,7 +30,6 @@ router.get('/', (req, res) => {
 })
 
 
-
 /**POST
 * @swagger
 * /authors:
@@ -80,6 +79,97 @@ router.post('/', (req, res) => {
             res.status(500).json({err: 'Could not create a new author.'})
         })
     
+
+
+})
+
+
+/**PUT
+* @swagger
+* /authors/{id}:
+*   put:
+*     description: Update an existing author.
+*     parameters:
+*        - in: body
+*          name: author
+*          description: The author to create
+*          schema:
+*              type: object
+*              required:
+*                - id: string
+*              properties:
+*                  name:
+*                      type: string
+*                  booksPublished:
+*                      type: string
+*                  birthplace:
+*                      type: string
+*                  genre:
+*                      type: string
+*                  website:
+*                      type: string
+*                  portrait:
+*                      type: string
+*                  died:
+*                      type: string
+*     responses:
+*       204:
+*         description: Success
+* 
+*/
+
+router.put('/:id', (req, res) => {
+    
+    const updates = req.body;
+
+    if (ObjectId.isValid(req.params.id)){
+        db.getDB().collection('authors')
+            .updateOne({_id: ObjectId(req.params.id)}, {$set: updates})
+            .then(result => {
+                res.status(204).json(result)
+            })
+            .catch(err => {
+                res.status(500).json({error: "Could not update the document."})
+            })
+    } else {
+        res.status(500).json({error: "Not a valid author id."})
+    }
+})
+
+
+/**DELETE
+ * @swagger
+ * /authors/{id}:
+ *   delete:
+ *     description: Delete a contact by ID.
+ *     parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *            type: string
+ *        description: String id of user to delete.
+ *        required: true
+ *     responses:
+ *       200:
+ *         description: User was deleted.
+ * 
+ */
+
+// Delete ======================================================================================================================
+router.delete('/:id', (req, res) => {
+    
+    if (ObjectId.isValid(req.params.id)){
+        db.getDB().collection('authors')
+            .deleteOne({_id: ObjectId(req.params.id)})
+            .then(result => {
+                res.status(200).json(result)
+            })
+            .catch(err => {
+                res.status(500).json({error: "Could not delete the author."})
+            })
+    } else {
+        res.status(500).json({error: "Not a valid doc id."})
+    }
 
 
 })

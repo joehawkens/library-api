@@ -66,6 +66,8 @@ router.get('/', (req, res) => {
 *     responses:
 *       200:
 *         description: Success
+*       400:
+*         description: Bad Request
 *       500:
 *         description: Failure
 * 
@@ -122,6 +124,8 @@ router.post('/', (req, res) => {
 *     responses:
 *       204:
 *         description: Success
+*       400:
+*         description: Bad Request
 *       500:
 *         description: Failure
 * 
@@ -161,6 +165,8 @@ router.put('/:id', (req, res) => {
 *     responses:
 *       200:
 *         description: User was deleted.
+*       400:
+*         description: Bad Request
 *       500:
 *         description: Failure
 * 

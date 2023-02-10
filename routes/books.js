@@ -6,6 +6,10 @@ const db = require('../db');
 const { ObjectId } = require('mongodb');
 app.use(express.json());
 
+
+//VALIDATION
+const { check, validationResult } = require('express-validator');
+
 /**GET ALL
  * @swagger
  * /books:
@@ -61,16 +65,30 @@ router.get('/', (req, res) => {
  *                  isASeries:
  *                      type: string
  *     responses:
- *       200:
- *         description: Success
+ *       201:
+ *         description: Created
+ *       400:
+ *         description: Bad Request
  *       500:
  *         description: Failure
  * 
  */
 
 // POST ========================================================================================================================
-router.post('/', (req, res) => {
+router.post('/', [
+    check('title').notEmpty(),
+    check('pageCount').notEmpty(),
+    check('authorName').notEmpty(),
+    check('averageRating').notEmpty(),
+    check('datePublished').notEmpty(),
+    check('isASeries').notEmpty()
+], (req, res) => {
 
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+        return res.status(400).json('bad request' + {errors: errors.array()})
+    }
 
     const book = req.body;
 
@@ -117,12 +135,27 @@ router.post('/', (req, res) => {
 *     responses:
 *       204:
 *         description: Success
+*       400:
+*         description: Bad Request
 *       500:
 *         description: Failure
 * 
 */
 
-router.put('/:id', (req, res) => {
+router.put('/:id',[
+    check('title').notEmpty(),
+    check('pageCount').notEmpty(),
+    check('authorName').notEmpty(),
+    check('averageRating').notEmpty(),
+    check('datePublished').notEmpty(),
+    check('isASeries').notEmpty()
+], (req, res) => {
+
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+        return res.status(400).json('bad request' + {errors: errors.array()})
+    }
     
     const updates = req.body;
 
@@ -156,13 +189,17 @@ router.put('/:id', (req, res) => {
  *     responses:
  *       200:
  *         description: User was deleted.
+ *       400:
+ *         description: Bad Request
  *       500:
  *         description: Failure
  * 
  */
 
 // Delete ======================================================================================================================
-router.delete('/:id', (req, res) => {
+router.delete('/:id',[
+    check('title').notEmpty()
+], (req, res) => {
     
     if (ObjectId.isValid(req.params.id)){
         db.getDB().collection('books')

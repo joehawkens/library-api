@@ -112,6 +112,9 @@ router.post('/', [
 *   put:
 *     description: Update an existing book.
 *     parameters:
+*        - in: path
+*          name: id
+*          description: ID of the book.
 *        - in: body
 *          name: book
 *          description: The book to create
@@ -138,7 +141,7 @@ router.post('/', [
 *       400:
 *         description: Bad Request
 *       500:
-*         description: Failure
+*         description: Server Failure
 * 
 */
 
@@ -198,7 +201,7 @@ router.put('/:id',[
 
 // Delete ======================================================================================================================
 router.delete('/:id',[
-    check('title').notEmpty()
+    check('id').isString()
 ], (req, res) => {
     
     if (ObjectId.isValid(req.params.id)){
@@ -211,7 +214,7 @@ router.delete('/:id',[
                 res.status(500).json({error: "Could not delete the book."})
             })
     } else {
-        res.status(500).json({error: "Not a valid doc id."})
+        res.status(500).json({error: "Not a valid book id."})
     }
 
 

@@ -6,6 +6,9 @@ const db = require('../db');
 const { ObjectId } = require('mongodb');
 app.use(express.json());
 
+//VALIDATION
+const { check, validationResult } = require('express-validator');
+
 
 /**GET ALL
 * @swagger
@@ -74,7 +77,15 @@ router.get('/', (req, res) => {
 */
 
 // POST ========================================================================================================================
-router.post('/', (req, res) => {
+router.post('/',[
+    check('name').notEmpty(),
+    check('booksPublished').notEmpty(),
+    check('birthplace').notEmpty(),
+    check('genre').notEmpty(),
+    check('website').notEmpty(),
+    check('portrait').notEmpty(),
+    check('died').notEmpty()
+], (req, res) => {
 
 
     const author = req.body;
@@ -99,6 +110,9 @@ router.post('/', (req, res) => {
 *   put:
 *     description: Update an existing author.
 *     parameters:
+*        - in: path
+*          name: id
+*          description: ID of the user.
 *        - in: body
 *          name: author
 *          description: The author to create
@@ -131,7 +145,15 @@ router.post('/', (req, res) => {
 * 
 */
 
-router.put('/:id', (req, res) => {
+router.put('/:id',[
+    check('name').notEmpty(),
+    check('booksPublished').notEmpty(),
+    check('birthplace').notEmpty(),
+    check('genre').notEmpty(),
+    check('website').notEmpty(),
+    check('portrait').notEmpty(),
+    check('died').notEmpty()
+], (req, res) => {
     
     const updates = req.body;
 

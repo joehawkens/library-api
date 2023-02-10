@@ -14,6 +14,8 @@ app.use(express.json());
  *     responses:
  *       200:
  *         description: Success
+ *       500:
+ *         description: Failure
  * 
  */
 
@@ -24,7 +26,10 @@ router.get('/', (req, res) => {
     db.getDB().collection('books').find({}).toArray()
     .then((books) => {
         res.send(books)
-    });
+    })
+    .catch(err => {
+        res.status(500).json({err: 'Could not get all books.'})
+    })
 
 })
 
@@ -58,6 +63,8 @@ router.get('/', (req, res) => {
  *     responses:
  *       200:
  *         description: Success
+ *       500:
+ *         description: Failure
  * 
  */
 
@@ -110,6 +117,8 @@ router.post('/', (req, res) => {
 *     responses:
 *       204:
 *         description: Success
+*       500:
+*         description: Failure
 * 
 */
 
@@ -147,6 +156,8 @@ router.put('/:id', (req, res) => {
  *     responses:
  *       200:
  *         description: User was deleted.
+ *       500:
+ *         description: Failure
  * 
  */
 

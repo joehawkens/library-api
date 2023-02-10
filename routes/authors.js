@@ -15,17 +15,22 @@ app.use(express.json());
 *     responses:
 *       200:
 *         description: Success
-* 
+*       500:
+*         description: Failure
 */
 
 // GET All ===================================================================================================================
 router.get('/', (req, res) => {
-    
-    
-    db.getDB().collection('authors').find({}).toArray()
-    .then((authors) => {
-        res.send(authors)
-    });
+
+        db.getDB().collection('authors').find({}).toArray()
+        .then((authors) => {
+            res.send(authors)
+        })
+        .catch(err => {
+            res.status(500).json({err: 'Could not get authors.'})
+        })
+        
+
 
 })
 
@@ -61,6 +66,8 @@ router.get('/', (req, res) => {
 *     responses:
 *       200:
 *         description: Success
+*       500:
+*         description: Failure
 * 
 */
 
@@ -115,6 +122,8 @@ router.post('/', (req, res) => {
 *     responses:
 *       204:
 *         description: Success
+*       500:
+*         description: Failure
 * 
 */
 
@@ -138,22 +147,24 @@ router.put('/:id', (req, res) => {
 
 
 /**DELETE
- * @swagger
- * /authors/{id}:
- *   delete:
- *     description: Delete a contact by ID.
- *     parameters:
- *      - in: path
- *        name: id
- *        schema:
- *            type: string
- *        description: String id of user to delete.
- *        required: true
- *     responses:
- *       200:
- *         description: User was deleted.
- * 
- */
+* @swagger
+* /authors/{id}:
+*   delete:
+*     description: Delete a contact by ID.
+*     parameters:
+*      - in: path
+*        name: id
+*        schema:
+*            type: string
+*        description: String id of user to delete.
+*        required: true
+*     responses:
+*       200:
+*         description: User was deleted.
+*       500:
+*         description: Failure
+* 
+*/
 
 // Delete ======================================================================================================================
 router.delete('/:id', (req, res) => {

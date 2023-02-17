@@ -8,6 +8,20 @@ const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 
 
+// OAUTH ==============================================================
+var findOrCreate = require('mongoose-findorcreate');
+const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+
+app.set('view enginer', 'ejs');
+app.use(session({
+    resave: false,
+    saveUninitialized: true,
+    secret: 'SECRET'
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 
 // ROUTES =============================================================
@@ -20,6 +34,7 @@ app.use('/books', booksRouter);
 
 // AUTHORS ROUTER
 const authorsRouter = require('./routes/authors');
+const passport = require('passport');
 app.use('/authors', authorsRouter);
 
 

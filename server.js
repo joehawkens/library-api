@@ -9,18 +9,18 @@ const swaggerJsDoc = require('swagger-jsdoc');
 
 
 // OAUTH ==============================================================
-var findOrCreate = require('mongoose-findorcreate');
-const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+// var findOrCreate = require('mongoose-findorcreate');
+// const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
-app.set('view enginer', 'ejs');
-app.use(session({
-    resave: false,
-    saveUninitialized: true,
-    secret: 'SECRET'
-}));
+// app.set('view enginer', 'ejs');
+// app.use(session({
+//     resave: false,
+//     saveUninitialized: true,
+//     secret: 'SECRET'
+// }));
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
 
